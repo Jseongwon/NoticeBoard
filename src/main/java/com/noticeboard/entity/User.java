@@ -1,22 +1,27 @@
 package com.noticeboard.entity;
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Getter
-@Entity
+@Entity(name = "User")
+@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @Column(length = 64, nullable = false)
+    @Column(unique = true, length = 128)
     private String name;
+
+    @Column(unique = true, length = 128)
+    private String emailAddress;
 
     @Column(length = 64, nullable = false)
     private String password;
@@ -24,7 +29,6 @@ public class User {
     @Column(length = 64, nullable = false)
     private String salt;
 
-    @Builder
     public User(String name, String password, String salt) {
         this.name = name;
         this.password = password;

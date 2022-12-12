@@ -4,31 +4,35 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Getter
-@Entity
+@Entity(name = "Profile")
+@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Profile {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @Column(length = 64, nullable = false)
+public class Profile extends BaseEntity {
+    @Column(length = 64, nullable = true)
     private String name;
 
-    @Column(length = 64, nullable = false)
+    @Column(length = 64, nullable = true)
     private String address;
 
-    @Column(length = 64, nullable = false)
+    @Column(length = 64, nullable = true)
     private String telephoneNumber;
 
-    @Column(length = 128, nullable = false)
+    @Email
+    @Column(unique = true, length = 128, nullable = true)
     private String emailAddress;
 
-    @Builder
-    public Profile(String name, String address, String telephoneNumber, String emailAddress) {
+    public Profile(
+            @RequestParam(defaultValue = "") String name,
+            @RequestParam(defaultValue = "") String address,
+            @RequestParam(defaultValue = "") String telephoneNumber,
+            @RequestParam(defaultValue = "") String emailAddress) {
         this.name = name;
         this.address = address;
         this.telephoneNumber = telephoneNumber;

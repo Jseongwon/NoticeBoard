@@ -1,0 +1,31 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+    <table class="table">
+        <thead class="table-dark">
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성일시</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="post, loop : ${paging}">
+<!--            // 번호 = 전체 게시물 개수 - (현재 페이지 * 페이지당 게시물 개수) - 나열 인덱스-->
+            <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
+            <td>
+                <a th:href="@{|/post/detail/${post.id}|}">[[${post.title}]]</a>
+                <span class="text-danger small ms-2"
+                      th:if="${#lists.size(post.commentList) > 0}"
+                      th:text="${#lists.size(post.commentList)}">
+                </span>
+            </td>
+            <td th:text="${#temporals.format(post.createAt, 'yyyy-MM-dd HH:mm')}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:replace="~{pagination :: paginationFragment}"></div>
+
+    <a th:href="@{/post/create}" class="btn btn-primary">질문 등록하기</a>
+</div>
+</html>

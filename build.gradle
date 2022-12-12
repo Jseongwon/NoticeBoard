@@ -26,9 +26,10 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     // H2
-    // developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    //
     // runtimeOnly 'com.h2database:h2'
     // runtimeOnly 'com.mysql:mysql-connector-j'
 
@@ -39,6 +40,17 @@ dependencies {
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // HTML Template engine(Thymleaf)
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+
+    // Spring Boot Validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
 }
 
 tasks.named('test') {
