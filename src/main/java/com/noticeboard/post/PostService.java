@@ -2,6 +2,7 @@ package com.noticeboard.post;
 
 import com.noticeboard.entity.Comment;
 import com.noticeboard.entity.Post;
+import com.noticeboard.entity.User;
 import com.noticeboard.entity.UserMeta;
 import com.noticeboard.exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,22 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    private Specification search(String keyword) {
+    private Specification searchByTitleAndContent(String keyword) {
+        return new Specification<Post>() {
+            private static final long serialVersionUID = 1L;
+            @Override
+            public Predicate toPredicate(Root<Post> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                query.distinct(true);
+                Join<Post, Comment> postCommentJoin = root.join("commentList", JoinType.LEFT);
+                System.out.println("Keyword : " + keyword);
+                return criteriaBuilder.or(criteriaBuilder.like(root.get("title"), "%" + keyword + "%"),
+                        criteriaBuilder.like(root.get("content"), "%" + keyword + "%"),      // 내용
+                        criteriaBuilder.like(postCommentJoin.get("content"), "%" + keyword + "%"));
+            }
+        };
+    }
+
+    private Specification searchByAuthor(String keyword) {
         return new Specification<Post>() {
             private static final long serialVersionUID = 1L;
             @Override
@@ -32,11 +48,10 @@ public class PostService {
                 Join<Post, UserMeta> postUserMetaJoin = root.join("author", JoinType.LEFT);
                 Join<Post, Comment> postCommentJoin = root.join("commentList", JoinType.LEFT);
                 Join<Comment, UserMeta> commentUserMetaJoin = postCommentJoin.join("author", JoinType.LEFT);
-                return criteriaBuilder.or(criteriaBuilder.like(root.get("title"), "%" + keyword + "%"), // 제목
-                        criteriaBuilder.like(root.get("content"), "%" + keyword + "%"),      // 내용
-                        criteriaBuilder.like(postUserMetaJoin.get("name"), "%" + keyword + "%"),    // 질문 작성자
-                        criteriaBuilder.like(postCommentJoin.get("content"), "%" + keyword + "%"),      // 답변 내용
-                        criteriaBuilder.like(commentUserMetaJoin.get("name"), "%" + keyword + "%"));   // 답변 작성자
+
+                return criteriaBuilder.or(
+                        criteriaBuilder.like(postUserMetaJoin.get("user").get("name"), "%" + keyword + "%"),
+                        criteriaBuilder.like(commentUserMetaJoin.get("user").get("name"), "%" + keyword + "%"));
             }
         };
     }
@@ -47,7 +62,8 @@ public class PostService {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createAt"));
         Pageable pageable = PageRequest.of(page, pageSize, Sort.by(sorts));
-        Specification<Post> specification = search(keyword);
+        //return this.postRepository.findAllByKeyword(keyword, pageable);
+        Specification<Post> specification = searchByTitleAndContent(keyword);
         return this.postRepository.findAll(specification, pageable);
     }
 

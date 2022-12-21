@@ -30,7 +30,6 @@ public class CommentController {
     private final PostService postService;
     private final CommentService commentService;
     private final UserMetaService userMetaService;
-    private final CommentRepository commentRepository;
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create/{id}")

@@ -44,4 +44,7 @@
         <input type="hidden" id="page" name="page" th:value="${paging.number}">
     </form>
 </div>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/post_list.js}"></script>
+</th:block>
 </html>
