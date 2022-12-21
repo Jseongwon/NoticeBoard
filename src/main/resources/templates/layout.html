@@ -1,11 +1,24 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://thymeleaf.org/extras/spring-security">
+<!--xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"-->
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <th:block layout:fragment="meta"></th:block>
+
+  <th:block layout:fragment="csrfMeta"></th:block>
+<!--  <meta id="_csrf_parameter" name="_csrf_parameter" th:content="${_csrf.parameterName}" />-->
+<!--  <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}" />-->
+<!--  <meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />-->
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/lib/bootstrap.min.css}">
+
+  <th:block layout:fragment="css"></th:block>
   <title>Notice Board</title>
 </head>
 <body>
@@ -14,6 +27,7 @@
 <th:block layout:fragment="content"></th:block>
 <!-- 기본 템플릿 안에 삽입될 내용 End -->
 
-<script th:src="@{/bootstrap.min.js}"></script>
+<th:block layout:fragment="script"></th:block>
+<script th:src="@{/lib/bootstrap.min.js}"></script>
 </body>
 </html>

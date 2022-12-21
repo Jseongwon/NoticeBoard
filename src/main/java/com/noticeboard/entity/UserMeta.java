@@ -22,10 +22,10 @@ public class UserMeta {
     @OneToOne
     private Profile profile;
 
-    @OneToMany(mappedBy = "userMeta", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE)
     private List<Post> postList;
 
-    @OneToMany(mappedBy = "userMeta", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE)
     private List<Comment> commentList;
 
     @Builder

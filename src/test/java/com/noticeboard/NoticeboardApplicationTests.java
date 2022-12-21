@@ -30,6 +30,21 @@ class NoticeboardApplicationTests {
 
     }
 }
+// Modified Table
+//this.postService.create("첫 포스팅", "포스팅이 잘 됩니다.");
+//
+//this.postService.create("두번째 포스팅", "두번째도 잘 됩니다.");
+
+//Post post = this.postService.getPost(1L);
+//this.commentService.create(post, "첫번째 코맨트");
+
+//for(int i = 1; i <= 300; i++) {
+//    title = String.format("테스트 데이터입니다. [%03d]", i);
+//    content = "내용무";
+//    this.postService.create(title, content);
+//}
+
+
 // Post Test
 // Insert post
 // Before

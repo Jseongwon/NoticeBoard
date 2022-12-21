@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Entity(name = "Comment")
@@ -16,16 +17,23 @@ public class Comment extends BaseEntity {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "meta_id", referencedColumnName = "id")
-    private UserMeta userMeta;
+    @JoinColumn(name = "author", referencedColumnName = "id")
+    private UserMeta author;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
 
-    public Comment(String content, UserMeta userMeta, Post post) {
+    @ManyToMany
+    Set<UserMeta> voter;
+
+    public Comment(String content, UserMeta author, Post post) {
         this.content = content;
-        this.userMeta = userMeta;
+        this.author = author;
         this.post = post;
+    }
+
+    public void update(String content) {
+        this.content = content;
     }
 }

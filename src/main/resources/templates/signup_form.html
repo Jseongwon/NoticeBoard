@@ -5,25 +5,33 @@
       <h4>회원가입</h4>
     </div>
   </div>
-  <form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post">
-    <div th:replace="~{form_errors :: formErrorsFragment}"></div>
+  <form id="signupForm" th:action="@{/user/signup}" th:object="${userCreateForm}" method="post">
     <div class="mb-3">
       <label for="name" class="form-label">사용자ID</label>
       <input type="text" th:field="*{name}" class="form-control">
     </div>
     <div class="mb-3">
-      <label for="password" class="form-label">비밀번호</label>
-      <input type="password" th:field="*{password}" class="form-control">
+      <label for="passwordInput" class="form-label">비밀번호</label>
+      <input type="password" id="passwordInput" class="form-control">
+      <input type="hidden" th:field="*{password}">
+      <input type="hidden" th:field="*{salt}">
     </div>
     <div class="mb-3">
       <label for="passwordConfirm" class="form-label">비밀번호 확인</label>
-      <input type="password" th:field="*{passwordConfirm}" class="form-control">
+      <input type="password" id="passwordConfirm" class="form-control">
+      <span id="confirmMessage"></span>
     </div>
     <div class="mb-3">
       <label for="emailAddress" class="form-label">이메일</label>
       <input type="email" th:field="*{emailAddress}" class="form-control">
     </div>
-    <button type="submit" class="btn btn-primary">회원가입</button>
+    <button id="signupButton" type="button" class="btn btn-primary">회원가입</button>
+    <div th:replace="~{form_errors :: formErrorsFragment}"></div>
   </form>
 </div>
+<th:block layout:fragment="script">
+  <script th:src="@{/lib/crypto-js.min.js}"></script>
+  <script type="module" th:src="@{/js/user-crypt-helper.js}"></script>
+  <script th:src="@{/js/signup_form.js}"></script>
+</th:block>
 </html>

@@ -23,10 +23,10 @@ public class User extends BaseEntity {
     @Column(unique = true, length = 128)
     private String emailAddress;
 
-    @Column(length = 64, nullable = false)
+    @Column(length = 256, nullable = false)
     private String password;
 
-    @Column(length = 64, nullable = false)
+    @Column(length = 256, nullable = false)
     private String salt;
 
     public User(String name, String password, String salt) {
