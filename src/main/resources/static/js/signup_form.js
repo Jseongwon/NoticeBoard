@@ -63,8 +63,6 @@
         // 4. 해싱된 비밀번호 값을 저장한다.
         passwordElement.value = hashedPassword;
 
-        // true를 반환하면 form에서의 이벤트 처리가 진행된다.
-        // const formElement = document.getElementById('signupForm');
         formElement.submit();
     }
 

@@ -13,10 +13,6 @@ import javax.validation.constraints.Email;
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(unique = true, length = 128)
     private String name;
 

@@ -8,6 +8,7 @@ import com.noticeboard.user.ApplicationUser;
 import com.noticeboard.user.UserService;
 import com.noticeboard.usermeta.UserMetaService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +23,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
+@Slf4j
 @RequestMapping("/post")
 @RequiredArgsConstructor
 @Controller
@@ -33,6 +35,7 @@ public class PostController {
     @RequestMapping("/list")
     public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
                        @RequestParam(value = "keyword", defaultValue = "") String keyword) {
+        log.info("page:{}, keyword:{}", page, keyword);
         Page<Post> paging = this.postService.getList(page, keyword);
 
         model.addAttribute("paging", paging);

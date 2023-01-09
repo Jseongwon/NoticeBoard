@@ -22,8 +22,13 @@
     searchButtonElement.addEventListener('click', onSearchButtonClicked);
 
     function onPaginationItemClicked(event) {
-        if(event.target.classList.contains("page-link")) {
-            document.getElementById('page').value = event.target.dataset.page;
+        let targetElement = event.target;
+        if(targetElement.tagName === "SPAN") {
+            targetElement = targetElement.parentNode;
+        }
+
+        if(targetElement.classList.contains("page-link")) {
+            document.getElementById('page').value = targetElement.dataset.page;
             searchFormElement.submit();
         }
     }
